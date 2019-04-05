@@ -1,93 +1,29 @@
-'use strict'
+'use strict';
 
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+const Post = use('App/Models/Post');
 
-/**
- * Resourceful controller for interacting with posts
- */
 class PostController {
   /**
-   * Show a list of all posts.
-   * GET posts
-   *
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
+   * @param {Request} ctx.request
    */
-  async index ({ request, response, view }) {
+  async post({response, auth, request}) {
+    const post = await Post.create(request.body);
+
+    return response.json(post);
   }
 
   /**
-   * Render a form to be used for creating a new post.
-   * GET posts/create
-   *
+   * 
    * @param {object} ctx
-   * @param {Request} ctx.request
    * @param {Response} ctx.response
-   * @param {View} ctx.view
    */
-  async create ({ request, response, view }) {
-  }
+  async get({response, params: {id}}) {
+    const post = await Post.query().where("id", id).fetch();
 
-  /**
-   * Create/save a new post.
-   * POST posts
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
-
-  /**
-   * Display a single post.
-   * GET posts/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-  }
-
-  /**
-   * Render a form to update an existing post.
-   * GET posts/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update post details.
-   * PUT or PATCH posts/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async update ({ params, request, response }) {
-  }
-
-  /**
-   * Delete a post with id.
-   * DELETE posts/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async destroy ({ params, request, response }) {
+    return response.json(post);
   }
 }
 
-module.exports = PostController
+module.exports = PostController;

@@ -23,4 +23,8 @@ Route.post('/register', 'UserController.create');
 Route.get('/users', 'UserController.getAll');
 Route.get('/users/:id', 'UserController.getOne');
 Route.delete('/users/:id', 'UserController.delete');
+Route.post('/users/login', 'UserController.login');
+Route.get('/user/token', 'UserController.findUserByToken');
 
+Route.post('/post', 'PostController.post');
+Route.get('/posts/:id', 'PostController.get').middleware('auth');
